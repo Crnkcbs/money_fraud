@@ -1,21 +1,38 @@
-
 version: 2
 
-models:
-    - name: my_first_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
-            tests:
-                - unique
-                - not_null
+sources:
+  - name: data426-group3
+    schema: money_fraud
+    description: "Projeye ait tüm ham tablolar"
+    tables:
+      - name: balance_features
+        identifier: balance_features
+        description: "Bakiye özellikleri tablosu"
 
-    - name: my_second_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
-            tests:
-                - unique
-                - not_null
+      - name: fraud_scenario_labels
+        identifier: fraud_scenario_labels
+        description: "Dolandırıcılık senaryo etiketleri tablosu"
+
+      - name: network_features
+        identifier: network_features
+        description: "Ağ grafik özellikleri tablosu"
+
+      - name: risk_features
+        identifier: risk_features
+        description: "Risk özellikleri tablosu"
+
+      - name: sender_behavior_features
+        identifier: sender_behavior_features
+        description: "Göncerici alıcı ilişkisi tablosu"
+
+      - name: sender_receiver_features
+        identifier: sender_receiver_features
+        description: "Gönderici alıcı ilişkisi tablosu"
+
+      - name: temporal_features
+        identifier: temporal_features
+        description: "Zaman ve dönem özellikleri tablosu"
+
+      - name: transactions
+        identifier: transactions
+        description: "Ana işlem tablosu"
