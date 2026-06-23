@@ -12,9 +12,11 @@ renamed as (
         transaction_id,
         nameorig,
         namedest,
-        same_receiver_count_24h,
-        sender_receiver_tx_count_so_far,
-        is_new_receiver_for_sender
+-- Sayım (Count) bildiren alanları tam sayı (int64) yapıyoruz        
+        cast(same_receiver_count_24h as int64) as same_receiver_count_24h,
+        cast(sender_receiver_tx_count_so_far as int64) as sender_receiver_tx_count_so_far,
+-- Durum (Flag) bildiren alanı true/false (boolean) yapıyoruz        
+        cast(is_new_receiver_for_sender as boolean) as is_new_receiver_for_sender
 
     from source
 
