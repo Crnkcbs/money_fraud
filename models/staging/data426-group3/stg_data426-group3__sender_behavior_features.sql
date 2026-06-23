@@ -10,7 +10,7 @@ cleaned as (
     select
         cast(transaction_id as string) as transaction_id,
         
-        coalesce(trim(nameOrig), 'unknown') as nameOrig,
+        coalesce(trim(nameOrig), 'unknown') as nameorig,
 
         case
             when coalesce(sender_tx_count_total_so_far, 0) >= 0 
