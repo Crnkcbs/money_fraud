@@ -9,6 +9,7 @@ cleaned as (
 
     select
         cast(transaction_id as string) as transaction_id,
+        
         coalesce(trim(nameOrig), 'unknown') as nameOrig,
 
         case
