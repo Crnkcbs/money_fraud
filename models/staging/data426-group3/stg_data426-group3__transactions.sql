@@ -12,17 +12,21 @@ renamed as (
         transaction_id,
         step,
         type,
-        amount,
-        nameorig,
-        oldbalanceorg,
-        newbalanceorig,
-        namedest,
-        oldbalancedest,
-        newbalancedest,
-        isfraud,
-        isflaggedfraud,
-        is_merchant_dest,
-        is_customer_dest
+        nameOrig as nameorig,
+----virgülden sonra 2 basamağa yuvarlanan finanasal alanlar--
+
+        round(cast(amount as float64),2) as amount,
+        round(cast(oldbalanceOrg as float64),2) as old_balance_orig,
+        round(cast(newbalanceOrig as float64),2) as new_balance_orig,
+        nameDest as namedest,
+        round(cast(oldbalanceDest as float64),2) as old_balance_dest,
+        round(cast(newbalanceDest as float64),2) as new_balance_dest,
+
+--0/1 İNTEGER lanları BOLEAN yapıyoruz--        
+        cast(isfraud as boolean) as is_fraud,
+        cast(isFlaggedFraud as boolean) as is_flagged_fraud,
+        cast(is_merchant_dest as boolean) as is_merchant_dest,
+        cast(is_customer_dest as boolean) as is_customer_dest
 
     from source
 
