@@ -1,0 +1,137 @@
+version: 2
+
+sources:
+  - name: data426-group3
+    schema: money_fraud
+    description: "Projeye ait tüm ham tablolar"
+    tables:
+      - name: balance_features
+        identifier: balance_features
+        description: "Bakiye özellikleri tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null    
+          -  name: balance_diff_orig
+             description: "Gönderenin işlem öncesi ve sonrası arasındaki gereçek fark"
+             tests:
+               - not_null
+          -  name: balance_diff_dest
+             description: "Alıcının işlem öncesi ve sonrası arasındaki gereçek fark"
+             tests:
+               - not_null               
+          -  name: expected_newbalanceOrig
+             description: "İşlem tutarına göre gönderenin olması gereken (beklenen) bakiyesi"
+             tests:
+               - not_null              
+          -  name: expected_newbalanceDest
+             description: "İşlem tutatrına göre alıcının olması gereken (beklenen) yeni bakiyesi"
+             tests:
+               - not_null      
+          -  name: orig_balance_error
+             description: "Gönderenin beklenen bakiyesi ile gerçekleşen bakiyesi arasındaki matematiksel tutarsızlık miktarı"
+             tests:
+               - not_null                        
+          -  name: dest_balance_error
+             description: "Alıcının beklenen bakiyesi ile gerçekleşen bakiyesi arasındaki matematiksel tutarsızlık miktarı"
+             tests:
+               - not_null                            
+
+      - name: fraud_scenario_labels
+        identifier: fraud_scenario_labels
+        description: "Dolandırıcılık senaryo etiketleri tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null       
+
+      - name: network_features
+        identifier: network_features
+        description: "Ağ grafik özellikleri tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null                      
+          -  name: receiver_received_amount_so_far
+             description: "Alıcı hesabın geçmişten bugüne kadar topladığı para"
+             tests:
+               - not_null                   
+      - name: risk_features
+        identifier: risk_features
+        description: "Risk özellikleri tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null
+                 
+      - name: sender_behavior_features
+        identifier: sender_behavior_features
+        description: "Göncerici alıcı ilişkisi tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null
+                 
+      - name: sender_receiver_features
+        identifier: sender_receiver_features
+        description: "Gönderici alıcı ilişkisi tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null
+      - name: temporal_features
+        identifier: temporal_features
+        description: "Zaman ve dönem özellikleri tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null
+          - name: day
+            description: "İşlemin gerçekleştiği gün (ay bazında gün numarası)"
+            tests:
+              - not_null
+                 
+      - name: transactions
+        identifier: transactions
+        description: "Ana işlem tablosu"
+        columns:
+          - name: transaction_id
+            description: "işlem kimlik no"
+            tests:
+              -  unique
+              -  not_null
+          -  name: amount
+             description: "Transfer edilen para miktarı"
+             tests:
+               - not_null
+          -  name: oldbalanceOrg
+             description: "İşlem yapılmadan önce gönderen kişinin hesabında kalan eski bakiye "
+             tests:
+               - not_null               
+          -  name: newbalanceOrig
+             description: "İşlem yapıldıktan sonra gönderen kişinin hesabında kalan bakiye"
+             tests:
+               - not_null              
+          -  name: oldbalanceDest
+             description: "İşlem yapılmadan önce alıcın hesap bakiye"
+             tests:
+               - not_null      
+          -  name: newbalanceDest
+             description: "İşlem yapıldıktan sonra alıcının hesabında ki yeni bakiye"
+             tests:
+               - not_null
+    
