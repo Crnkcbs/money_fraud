@@ -56,4 +56,4 @@ SELECT
         is_engineered_scenario
     
 
-FROM {{ ref('int_data426-group3__transactions_join_fraud_scenario) }} 
+FROM {{ ref('int_data426-group3__transactions_join_fraud_scenario') }} 
