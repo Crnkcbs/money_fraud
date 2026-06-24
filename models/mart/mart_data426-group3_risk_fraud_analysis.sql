@@ -12,5 +12,5 @@ SELECT
     r.many_to_one_receiver_flag,
     r.suspicious_cashout_flag,
     r.large_transfer_flag
-FROM {{ ref('int_data426-group3__transactions_join_fraud_scenario') }} tf
-JOIN {{ ref('stg_data426-group3__risk_features') }} r USING transaction_id
+FROM {{ ref('int_data426-group3__transactions_join_fraud_scenario') }} AS tf
+JOIN {{ ref('stg_data426-group3__risk_features') }} AS r ON r.transaction_id = tf.transaction_id
