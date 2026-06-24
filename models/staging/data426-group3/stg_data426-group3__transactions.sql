@@ -21,12 +21,11 @@ renamed as (
         nameDest as namedest,
         round(cast(oldbalanceDest as float64),2) as old_balance_dest,
         round(cast(newbalanceDest as float64),2) as new_balance_dest,
-
---0/1 İNTEGER lanları BOLEAN yapıyoruz--        
-        cast(isfraud as boolean) as is_fraud,
-        cast(isFlaggedFraud as boolean) as is_flagged_fraud,
-        cast(is_merchant_dest as boolean) as is_merchant_dest,
-        cast(is_customer_dest as boolean) as is_customer_dest
+--               
+        cast(isfraud as integer) as is_fraud,
+        cast(isFlaggedFraud as integer) as is_flagged_fraud,
+        cast(is_merchant_dest as integer) as is_merchant_dest,
+        cast(is_customer_dest as integer) as is_customer_dest
 
     from source
 
