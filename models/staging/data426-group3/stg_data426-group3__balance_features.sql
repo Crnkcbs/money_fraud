@@ -21,9 +21,9 @@ renamed as (
         cast(dest_balance_error as float64) as dest_balance_error,
 
 --0/1 İNTEGER lanları BOLEAN yapıyoruz--
-        cast(is_sender_balance_zero_after as boolean) as is_sender_balance_zero_after,
-        cast(is_dest_balance_zero_before as boolean) as is_dest_balance_zero_before,
-        cast(is_dest_balance_missing as boolean ) as is_dest_balance_missing,
+        cast(is_sender_balance_zero_after as integer) as is_sender_balance_zero_after,
+        cast(is_dest_balance_zero_before as integer) as is_dest_balance_zero_before,
+        cast(is_dest_balance_missing as integer) as is_dest_balance_missing,
         leakage_warning
 
     from source
