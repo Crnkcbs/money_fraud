@@ -57,3 +57,4 @@ SELECT
     
 
 FROM {{ ref('int_data426-group3__transactions_join_fraud_scenario') }} 
+ORDER BY transaction_id
