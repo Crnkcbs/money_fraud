@@ -2,7 +2,6 @@
 SELECT
     transaction_id,
     step,
-    amount,
     type,
 -- Python kısmına hazırlık: İşlem türüne sayısal kimlik verilmek için type_code sütunu eklendi.
     CASE
@@ -11,17 +10,25 @@ SELECT
         WHEN type = 'CASH_IN'  THEN 3
         WHEN type = 'DEBIT'    THEN 4
         WHEN type = 'PAYMENT'  THEN 5
-    END AS type_code,
+    END AS type_code,    
+
+    amount,
+      -- amount bucket
+    CASE
+        WHEN amount = 0 THEN '0'
+        WHEN amount > 0 AND amount <= 100 THEN '0-100'
+        WHEN amount <= 1000 THEN '100-1K'
+        WHEN amount <= 10000 THEN '1K-10K'
+        WHEN amount <= 50000 THEN '10K-50K'
+        WHEN amount <= 100000 THEN '50K-100K'
+        WHEN amount <= 500000 THEN '100K-500K'
+        WHEN amount <= 1000000 THEN '500K-1M'
+        ELSE '1M+'
+    END AS amount_bucket,
+
     
     old_balance_orig,
     new_balance_orig,
-
--- Python'da modelin "hesap sıfırlandı mı" mantığını doğrudan okuyabilmesi için 'is_account_emptied' sütunu ekliyoruz.
-    CASE
-        WHEN new_balance_orig = 0 AND old_balance_orig > 0 THEN 1
-        ELSE 0
-    END AS is_account_emptied,
-    
     old_balance_dest,
     new_balance_dest,
     is_fraud,
