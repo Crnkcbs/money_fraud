@@ -26,9 +26,10 @@ SELECT
         ELSE '1M+'
     END AS amount_bucket,
 
-    
+    nameorig,
     old_balance_orig,
     new_balance_orig,
+    namedest,
     old_balance_dest,
     new_balance_dest,
     is_fraud,
