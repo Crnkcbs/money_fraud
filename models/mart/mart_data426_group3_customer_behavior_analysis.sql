@@ -51,7 +51,7 @@ enriched_features AS (
             ELSE 0 
         END AS is_liquidation,
 
-        ROUND(amount / NULLIF(monthly_transfer_volume, 0), 4) AS amount_to_monthly_volume_ratio
+        COALESCE(ROUND(CAST(amount AS FLOAT64) / NULLIF(monthly_transfer_volume, 0), 4), 0.0) AS amount_to_monthly_volume_ratio
     FROM calculated_volumes
 ),
 
