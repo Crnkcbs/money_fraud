@@ -69,6 +69,7 @@ joined_data AS (
         risk.high_velocity_flag,
         risk.new_receiver_flag,
         risk.many_to_one_receiver_flag,
+        risk.suspicious_cashout_flag,
         CAST(FLOOR((ts.day - 1) / 30) + 1 AS INT64) AS custom_month_id
         
     FROM main_transactions t
@@ -109,7 +110,10 @@ scoring_layer AS (
     SELECT
         *,
         (
-            (CASE WHEN CAST(is_liquidation AS INT64) = 1 THEN 20 ELSE 0 END) +
+(CASE WHEN is_liquidation = 1 THEN 20 ELSE 0 END) +
+            (CASE WHEN transfer_drain_ratio >= 0.90 AND is_liquidation = 0 THEN 15 ELSE 0 END) +
+            (CASE WHEN CAST(suspicious_cashout_flag AS INT64) = 1 THEN 20 ELSE 0 END) +
+            
             (CASE WHEN CAST(many_to_one_receiver_flag AS INT64) = 1 THEN 15 ELSE 0 END) +
             (CASE WHEN CAST(is_new_receiver_for_sender AS INT64) = 1 THEN 10 ELSE 0 END) +
             (CASE WHEN CAST(new_receiver_flag AS INT64) = 1 THEN 5 ELSE 0 END) +
@@ -118,6 +122,7 @@ scoring_layer AS (
             (CASE WHEN CAST(high_velocity_flag AS INT64) = 1 THEN 15 ELSE 0 END) +
             (CASE WHEN CAST(is_night AS INT64) = 1 THEN 5 ELSE 0 END) +
             (CASE WHEN type IN ('TRANSFER', 'CASH_OUT') THEN 5 ELSE 0 END)
+
         ) AS calculated_risk_score
     FROM enriched_features
 )
