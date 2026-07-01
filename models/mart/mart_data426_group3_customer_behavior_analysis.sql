@@ -90,11 +90,17 @@ enriched_features AS (
     SELECT
         *,
         CASE 
+        -- İşlem tutarının hepsini mi boşaltıyor.
             WHEN Safe_Cast(old_balance_orig AS STRING) IN ('true', 'false', 'TRUE', 'FALSE') THEN 0
             WHEN CAST(old_balance_orig AS FLOAT64) > 0 AND CAST(amount AS FLOAT64) = CAST(old_balance_orig AS FLOAT64) THEN 1 
             ELSE 0 
         END AS is_liquidation,
 
+        -- İşlem tutarının, hesaptaki mevcut paraya oranı (Örn: 100bin TL'nin 95binini mi çekiyor?)
+        -- Eğer bakiye 0 ise bölme hatası olmasın diye NULLIF kullanıyoruz.        
+        COALESCE(ROUND(CAST(amount AS FLOAT64) / NULLIF(CAST(old_balance_orig AS FLOAT64), 0), 4), 0.0) AS transfer_drain_ratio,
+
+        -- Aylık Hacim Oranı
         COALESCE(ROUND(CAST(amount AS FLOAT64) / NULLIF(monthly_transfer_volume, 0), 4), 0.0) AS amount_to_monthly_volume_ratio
     FROM calculated_volumes
 ),
